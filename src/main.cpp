@@ -1,18 +1,31 @@
 #include <Arduino.h>
+#include <WiFi.h>
 
-// put function declarations here:
-int myFunction(int, int);
+#define LED_PIN 2
+
+const char* ssid = "";
+const char* password = "";
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  // use webserver to send hello message to ensure connection is live
+  Serial.begin(115200);
+  delay(1000);
+  
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  Serial.print("Connecting to phone hotspot");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("\nConnected successfully!");
+  Serial.print("IP Address assigned by phone: ");
+  Serial.println(WiFi.localIP());
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  // Your main code here
+  
 }
